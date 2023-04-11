@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
-using System.Net;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
@@ -15,12 +10,12 @@ namespace GraphicEditor
         private int angle;
         private Point left;
         private Point right;
-        public Rectangle(Point left,Point right, string name,int radius = 3, int angle = 0)
+        public Rectangle(Point left, Point right, int radius = 3, int angle = 0)
         {
             this.left = left;
             this.right = right;
             this.angle = angle;
-            this.name = name;
+            name = $"{left.Name} {right.Name}";
             this.radius = radius;
             identityZone = radius * 2;
             color = Color.Black;

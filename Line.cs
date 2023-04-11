@@ -9,11 +9,11 @@ namespace GraphicEditor
         protected Point left;
         protected Point right;
 
-        public Line(Point left, Point right, string name, int radius = 3)
+        public Line(Point left, Point right, int radius = 3)
         {
             this.left = left;
             this.right = right;
-            this.name = name;
+            name = $"{left.Name} {right.Name}";
             this.radius = radius;
             identityZone = radius * 2;
             color = Color.Black;

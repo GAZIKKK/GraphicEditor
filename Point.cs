@@ -11,7 +11,7 @@ namespace GraphicEditor
 
         public Point(string name, int x = 0, int y = 0, int radius = 3)
         {
-            name = name ?? throw new ArgumentNullException(nameof(name));
+            this.name = name;
             X = x;
             Y = y;
             this.name = name;
@@ -21,10 +21,6 @@ namespace GraphicEditor
             type = ShapeType.Point;
             visible = true;
             multiplicity = 1;
-        }
-
-        public Point(Point point, string name, int radius) : this(name, point.X, point.Y, radius)
-        {
         }
 
         public override void SetMultiplicity(int k)
@@ -60,6 +56,11 @@ namespace GraphicEditor
         {
             DialogResult result = MessageBox.Show($"Имя: {name}\nX: {X}\nY: {Y}\nРадиус: {radius}\nЦвет: {color}\nУдалить точку?", "Информация о точке", MessageBoxButtons.YesNo);
             return result == DialogResult.Yes;
+        }
+
+        public string PointToString()
+        {
+            return $"Point {name} {X} {Y} {radius} {color}";
         }
     }
 }

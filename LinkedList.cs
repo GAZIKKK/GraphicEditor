@@ -105,21 +105,15 @@ namespace GraphicEditor
             return current.Data;
         }
 
-        public int DrawItems(Graphics g, DataGridView table)
+        public void DrawItems(Graphics g)
         {
-            table.Rows.Clear();
             Node<T> current = head;
-            int countRows = 0;
             while (current != null)
             {
                 switch (current.Data)
                 {
                     case Point point:
                         point.Draw(g);
-                        table.Rows.Add();
-                        table.Rows[countRows].Cells[0].Value = point.X;
-                        table.Rows[countRows].Cells[1].Value = point.Y;
-                        table.Rows[countRows].HeaderCell.Value = point.Name;
                         break;
                     case Line line:
                         line.Draw(g);
@@ -130,9 +124,7 @@ namespace GraphicEditor
                 }
 
                 current = current.Next;
-                countRows++;
             }
-            return countRows;
         }
     }
 }

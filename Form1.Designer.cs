@@ -28,11 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.TablePoints = new System.Windows.Forms.DataGridView();
-            this.X = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Y = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GraphicPanel = new System.Windows.Forms.PictureBox();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.ChooseСolor = new System.Windows.Forms.Button();
             this.textRadius = new System.Windows.Forms.TextBox();
@@ -45,71 +40,15 @@
             this.PointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.LineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RectangleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ArcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearButton = new System.Windows.Forms.Button();
             this.typeLabel = new System.Windows.Forms.Label();
             this.textAlpha = new System.Windows.Forms.TextBox();
             this.labelAlpha = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.TablePoints)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.GraphicPanel)).BeginInit();
-            this.tableLayoutPanel1.SuspendLayout();
+            this.GraphicPanel = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.GraphicPanel)).BeginInit();
             this.SuspendLayout();
-            // 
-            // TablePoints
-            // 
-            this.TablePoints.AllowUserToResizeColumns = false;
-            this.TablePoints.AllowUserToResizeRows = false;
-            this.TablePoints.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.TablePoints.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.TablePoints.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.TablePoints.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.X,
-            this.Y});
-            this.TablePoints.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TablePoints.Location = new System.Drawing.Point(1188, 3);
-            this.TablePoints.Name = "TablePoints";
-            this.TablePoints.RowHeadersWidth = 100;
-            this.TablePoints.Size = new System.Drawing.Size(291, 771);
-            this.TablePoints.TabIndex = 1;
-            // 
-            // X
-            // 
-            this.X.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.X.HeaderText = "X";
-            this.X.Name = "X";
-            // 
-            // Y
-            // 
-            this.Y.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Y.HeaderText = "Y";
-            this.Y.Name = "Y";
-            // 
-            // GraphicPanel
-            // 
-            this.GraphicPanel.BackColor = System.Drawing.Color.White;
-            this.GraphicPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GraphicPanel.Location = new System.Drawing.Point(3, 3);
-            this.GraphicPanel.Name = "GraphicPanel";
-            this.GraphicPanel.Size = new System.Drawing.Size(1179, 771);
-            this.GraphicPanel.TabIndex = 0;
-            this.GraphicPanel.TabStop = false;
-            this.GraphicPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GraphiсPanel_MouseDown);
-            this.GraphicPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.GraphicPanel_MouseUp);
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.Controls.Add(this.GraphicPanel, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.TablePoints, 1, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 27);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 777F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1482, 777);
-            this.tableLayoutPanel1.TabIndex = 0;
             // 
             // ChooseСolor
             // 
@@ -179,7 +118,8 @@
             this.выборЭлементаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.PointToolStripMenuItem,
             this.LineToolStripMenuItem,
-            this.RectangleToolStripMenuItem});
+            this.RectangleToolStripMenuItem,
+            this.ArcToolStripMenuItem});
             this.выборЭлементаToolStripMenuItem.Name = "выборЭлементаToolStripMenuItem";
             this.выборЭлементаToolStripMenuItem.Size = new System.Drawing.Size(111, 20);
             this.выборЭлементаToolStripMenuItem.Text = "Выбор элемента";
@@ -187,23 +127,30 @@
             // PointToolStripMenuItem
             // 
             this.PointToolStripMenuItem.Name = "PointToolStripMenuItem";
-            this.PointToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.PointToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.PointToolStripMenuItem.Text = "Точка";
             this.PointToolStripMenuItem.Click += new System.EventHandler(this.PointToolStripMenuItem_Click);
             // 
             // LineToolStripMenuItem
             // 
             this.LineToolStripMenuItem.Name = "LineToolStripMenuItem";
-            this.LineToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.LineToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.LineToolStripMenuItem.Text = "Линия";
             this.LineToolStripMenuItem.Click += new System.EventHandler(this.LineToolStripMenuItem_Click);
             // 
             // RectangleToolStripMenuItem
             // 
             this.RectangleToolStripMenuItem.Name = "RectangleToolStripMenuItem";
-            this.RectangleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.RectangleToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.RectangleToolStripMenuItem.Text = "Прямоугольник";
             this.RectangleToolStripMenuItem.Click += new System.EventHandler(this.RectangleToolStripMenuItem_Click);
+            // 
+            // ArcToolStripMenuItem
+            // 
+            this.ArcToolStripMenuItem.Name = "ArcToolStripMenuItem";
+            this.ArcToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.ArcToolStripMenuItem.Text = "Дуга";
+            this.ArcToolStripMenuItem.Click += new System.EventHandler(this.ArcToolStripMenuItem_Click);
             // 
             // clearButton
             // 
@@ -245,11 +192,23 @@
             this.labelAlpha.TabIndex = 8;
             this.labelAlpha.Text = "Угол:";
             // 
+            // GraphicPanel
+            // 
+            this.GraphicPanel.BackColor = System.Drawing.Color.White;
+            this.GraphicPanel.Location = new System.Drawing.Point(0, 27);
+            this.GraphicPanel.Name = "GraphicPanel";
+            this.GraphicPanel.Size = new System.Drawing.Size(1481, 771);
+            this.GraphicPanel.TabIndex = 9;
+            this.GraphicPanel.TabStop = false;
+            this.GraphicPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GraphiсPanel_MouseDown);
+            this.GraphicPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.GraphicPanel_MouseUp);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1493, 867);
+            this.Controls.Add(this.GraphicPanel);
             this.Controls.Add(this.labelAlpha);
             this.Controls.Add(this.textAlpha);
             this.Controls.Add(this.typeLabel);
@@ -257,28 +216,19 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textRadius);
             this.Controls.Add(this.ChooseСolor);
-            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Graphic Editor";
-            this.SizeChanged += new System.EventHandler(this.Form1_SizeChanged);
-            ((System.ComponentModel.ISupportInitialize)(this.TablePoints)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.GraphicPanel)).EndInit();
-            this.tableLayoutPanel1.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.GraphicPanel)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.DataGridView TablePoints;
-        private System.Windows.Forms.DataGridViewTextBoxColumn X;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Y;
-        private System.Windows.Forms.PictureBox GraphicPanel;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.Button ChooseСolor;
         private System.Windows.Forms.TextBox textRadius;
@@ -295,6 +245,8 @@
         private System.Windows.Forms.ToolStripMenuItem RectangleToolStripMenuItem;
         private System.Windows.Forms.TextBox textAlpha;
         private System.Windows.Forms.Label labelAlpha;
+        private System.Windows.Forms.ToolStripMenuItem ArcToolStripMenuItem;
+        private System.Windows.Forms.PictureBox GraphicPanel;
     }
 }
 

@@ -2,7 +2,7 @@
 
 namespace GraphicEditor
 {
-    public enum ShapeType { Point, Line, Rectangle };
+    public enum ShapeType { Point, Line, Rectangle, Arc };
 
     public abstract class Shape
     {

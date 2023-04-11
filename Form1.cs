@@ -10,18 +10,19 @@ namespace GraphicEditor
         private Point clickedPoint2;
         private Line newLine;
         private Rectangle newRectangle;
+        private Arc newArc;
         private int countPoint = 0;
-        private int countLine = 0;
-        private int countRectangle = 0;
-        private const int COLUMNS_COUNT = 2;
-        private int radius=5;
+        private int radius = 5;
         private Color color = Color.Black;
         private LinkedList<Point> points = new LinkedList<Point>();
         private LinkedList<Line> lines = new LinkedList<Line>();
         private LinkedList<Rectangle> rectangle = new LinkedList<Rectangle>();
-        private int countRowsPoint = 0;
+        private LinkedList<Arc> arcs = new LinkedList<Arc>();
         private ShapeType type = ShapeType.Point;
-        int alpha = 0;
+        private int alpha = 0;
+        private int radiusArc = 100;
+        private bool clockwise = false;
+        private bool signCurvature = false;
 
         public Form1()
         {
@@ -36,23 +37,46 @@ namespace GraphicEditor
                     DrawPoint(e);
                     break;
                 case ShapeType.Line:
-                    DrawLine(e); 
+                    DrawLine(e);
                     break;
                 case ShapeType.Rectangle:
                     DrawRectangle(e);
                     break;
+                case ShapeType.Arc:
+                    DrawArc(e);
+                    break;
             }
         }
-        
+
+        private void DrawArc(MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                clickedPoint1 = new Point($"A{countPoint++}", e.Location.X, e.Location.Y, radius);
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                if (arcs.InIdentityZone((p, x, y) => p.HitTest(x, y), e.Location.X, e.Location.Y))
+                {
+                    var pointHitter = arcs.GetItem((item, x, y) => item.HitTest(x, y), e.Location.X, e.Location.Y);
+                    if (pointHitter.ShowMessage())
+                    {
+                        arcs.Remove(pointHitter);
+                        update(GraphicPanel.CreateGraphics());
+                    }
+                }
+            }
+        }
+
         private void DrawRectangle(MouseEventArgs e)
         {
-            if(e.Button == MouseButtons.Left)
+            if (e.Button == MouseButtons.Left)
             {
-                clickedPoint1 = new Point($"A{countLine}", e.Location.X, e.Location.Y, radius);
+                clickedPoint1 = new Point($"A{countPoint++}", e.Location.X, e.Location.Y, radius);
             }
-            else if(e.Button == MouseButtons.Right)
+            else if (e.Button == MouseButtons.Right)
             {
-                if(rectangle.InIdentityZone((p, x, y) => p.HitTest(x, y), e.Location.X, e.Location.Y))
+                if (rectangle.InIdentityZone((p, x, y) => p.HitTest(x, y), e.Location.X, e.Location.Y))
                 {
                     var pointHitter = rectangle.GetItem((item, x, y) => item.HitTest(x, y), e.Location.X, e.Location.Y);
                     if (pointHitter.ShowMessage())
@@ -68,7 +92,7 @@ namespace GraphicEditor
         {
             if (e.Button == MouseButtons.Left)
             {
-                clickedPoint1 = new Point($"A{countLine}", e.Location.X, e.Location.Y, radius);
+                clickedPoint1 = new Point($"A{countPoint++}", e.Location.X, e.Location.Y, radius);
             }
             else if (e.Button == MouseButtons.Right)
             {
@@ -117,41 +141,42 @@ namespace GraphicEditor
 
         private void GraphicPanel_MouseUp(object sender, MouseEventArgs e)
         {
-            if(type == ShapeType.Line)
+            if (type == ShapeType.Line)
             {
                 if (e.Button == MouseButtons.Left)
                 {
-                    clickedPoint2 = new Point($"B{countLine}", e.Location.X, e.Location.Y, radius);
-                    newLine = new Line(clickedPoint1, clickedPoint2,$"AB{countLine}",radius);
+                    clickedPoint2 = new Point($"A{countPoint++}", e.Location.X, e.Location.Y, radius);
+                    newLine = new Line(clickedPoint1, clickedPoint2, radius);
                     newLine.Color = color;
                     Graphics g = GraphicPanel.CreateGraphics();
                     newLine.Draw(g);
                     lines.Add(newLine);
-                    countLine++;
-                    clickedPoint1 = new Point("A");
-                    clickedPoint2 = new Point("B");
                 }
             }
-            else if(type == ShapeType.Rectangle)
+            else if (type == ShapeType.Rectangle)
             {
                 if (e.Button == MouseButtons.Left)
                 {
-                    clickedPoint2 = new Point($"B{countLine}", e.Location.X, e.Location.Y, radius);
-                    newRectangle = new Rectangle(clickedPoint1, clickedPoint2, $"AB{countRectangle}", radius, alpha);
+                    clickedPoint2 = new Point($"A{countPoint++}", e.Location.X, e.Location.Y, radius);
+                    newRectangle = new Rectangle(clickedPoint1, clickedPoint2, radius, alpha);
                     newRectangle.Color = color;
                     Graphics g = GraphicPanel.CreateGraphics();
                     newRectangle.Draw(g);
                     rectangle.Add(newRectangle);
-                    countRectangle++;
-                    clickedPoint1 = new Point("A");
-                    clickedPoint2 = new Point("B");
                 }
             }
-        }
-
-        private void Form1_SizeChanged(object sender, EventArgs e)
-        {
-            TablePoints.RowHeadersWidth = TablePoints.Size.Width / COLUMNS_COUNT;
+            else if (type == ShapeType.Arc)
+            {
+                if (e.Button == MouseButtons.Left)
+                {
+                    clickedPoint2 = new Point($"A{countPoint++}", e.Location.X, e.Location.Y, radius);
+                    newArc = new Arc(clickedPoint1, clickedPoint2, radiusArc, clockwise, signCurvature, radius);
+                    newArc.Color = color;
+                    Graphics g = GraphicPanel.CreateGraphics();
+                    newArc.Draw(g);
+                    arcs.Add(newArc);
+                }
+            }
         }
 
         private void ChooseСolor_Click(object sender, EventArgs e)
@@ -164,7 +189,7 @@ namespace GraphicEditor
 
         private void textRadius_TextChanged(object sender, EventArgs e)
         {
-            if(int.TryParse(textRadius.Text.ToString(),out radius))
+            if (int.TryParse(textRadius.Text.ToString(), out radius))
             {
                 radius = int.Parse(textRadius.Text.ToString());
             }
@@ -181,9 +206,9 @@ namespace GraphicEditor
         private void update(Graphics g)
         {
             g.Clear(Color.White);
-            lines.DrawItems(g, TablePoints);
-            rectangle.DrawItems(g, TablePoints);
-            countRowsPoint = points.DrawItems(g, TablePoints);
+            lines.DrawItems(g);
+            rectangle.DrawItems(g);
+            points.DrawItems(g);
         }
 
         private void clearButton_Click(object sender, EventArgs e)
@@ -194,18 +219,14 @@ namespace GraphicEditor
             using (Graphics g = GraphicPanel.CreateGraphics())
             {
                 g.Clear(Color.White);
-                TablePoints.Rows.Clear();
-                countRowsPoint = 0;
                 countPoint = 0;
-                countLine = 0;
-                countRectangle = 0;
-            }   
+            }
         }
 
         private void LineToolStripMenuItem_Click(object sender, EventArgs e)
         {
             type = ShapeType.Line;
-            typeLabel.Text ="Тип: Линия";
+            typeLabel.Text = "Тип: Линия";
         }
 
         private void PointToolStripMenuItem_Click(object sender, EventArgs e)
@@ -220,15 +241,16 @@ namespace GraphicEditor
             typeLabel.Text = "Тип: Прямоугольник";
         }
 
+        private void ArcToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            type = ShapeType.Arc;
+            typeLabel.Text = "Тип: Дуга";
+        }
+
         private void AddPoint(MouseEventArgs e)
         {
-            clickedPoint1 = new Point($"A{countPoint}", e.Location.X, e.Location.Y, radius);
+            clickedPoint1 = new Point($"A{countPoint++}", e.Location.X, e.Location.Y, radius);
             clickedPoint1.Color = color;
-            TablePoints.Rows.Add();
-            TablePoints.Rows[countRowsPoint].Cells[0].Value = clickedPoint1.X;
-            TablePoints.Rows[countRowsPoint].Cells[1].Value = clickedPoint1.Y;
-            TablePoints.Rows[countRowsPoint].HeaderCell.Value = $"A{countPoint++}";
-            countRowsPoint++;
             Graphics g = GraphicPanel.CreateGraphics();
             clickedPoint1.Draw(g);
             points.Add(clickedPoint1);
